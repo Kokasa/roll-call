@@ -27,7 +27,6 @@ public class GroupController {
 
         System.out.println(groupService.addGroup(group));
 
-        getAllGroup();
     }
 
 
