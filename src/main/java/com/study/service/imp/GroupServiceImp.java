@@ -18,6 +18,11 @@ public class GroupServiceImp implements GroupService {
 
     private StudentService studentService;
 
+    public GroupServiceImp() {
+        groupCSVDao = new GroupCSVDao();
+        groupStudentCSVDao = new GroupStudentCSVDao();
+        studentService = new StudentServiceImp();
+    }
     /**
      * 添加组对象
      *
@@ -130,7 +135,6 @@ public class GroupServiceImp implements GroupService {
 
     /**
      * 随机获取组对象
-     *
      * @return
      */
     @Override
