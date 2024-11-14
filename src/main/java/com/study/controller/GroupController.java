@@ -16,6 +16,7 @@ public class GroupController {
 
     /**
      * 新增小组
+     *
      */
     public void addGroup() {
         Group group = new Group();

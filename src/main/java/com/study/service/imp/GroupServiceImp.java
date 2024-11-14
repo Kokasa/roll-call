@@ -135,7 +135,6 @@ public class GroupServiceImp implements GroupService {
 
     /**
      * 随机获取组对象
-     *
      * @return
      */
     @Override
