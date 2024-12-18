@@ -4,6 +4,7 @@ import com.study.entity.MyClassStudent;
 import com.study.entity.Student;
 import com.study.service.StudentService;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class StudentController {
@@ -81,16 +82,17 @@ public class StudentController {
     /**
      * 查询随机学生
      */
-    public void getRandomStudent() {
-        System.out.println(studentService.getRandomStudent());
+    public Student getRandomStudent() {
+        return studentService.getRandomStudent();
     }
 
     /**
      * 查询所有学生
      */
-    public void getAllStudent() {
+    public List<Student> getAllStudent() {
         for (Student student : studentService.getAllStudent()) {
             System.out.println(student);
         }
+        return studentService.getAllStudent();
     }
 }

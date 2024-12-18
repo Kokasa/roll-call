@@ -1,6 +1,7 @@
 package com.study.dao;
 
 import com.study.entity.Student;
+import com.study.util.FileUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class StudentCSVDao {
      */
     public List<Student> readStudentFromCSV() {
         List<Student> students = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(csvFilePath))) {
+        try (BufferedReader reader = FileUtils.createReader(csvFilePath)) {
             String row;
             while ((row = reader.readLine()) != null) {
                 String[] data = row.split(",");
@@ -33,7 +34,7 @@ public class StudentCSVDao {
      * @param students 学生列表
      */
     public void writeStudentToCSV(List<Student> students) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath))) {
+        try (BufferedWriter writer = FileUtils.createWriter(csvFilePath)) {
             for (Student student : students) {
                 writer.write(student.getStudentId() + "," + student.getStudentName());
                 writer.newLine();

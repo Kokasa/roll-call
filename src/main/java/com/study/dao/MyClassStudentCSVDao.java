@@ -1,17 +1,39 @@
 package com.study.dao;
 
 import com.study.entity.MyClassStudent;
+import com.study.entity.Student;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MyClassStudentCSVDao {
     private String csvFilePath = "E:\\Workspace\\javaSE\\works\\rool-call\\src\\main\\resources\\myclassstudent.csv";
+    private final StudentCSVDao studentDao;
+
+    public MyClassStudentCSVDao() {
+        this.studentDao = new StudentCSVDao();
+    }
 
     /**
-     * 从CSV文件中读取班级信息
-     * @return 班级列表
+     * 获取班级中的所有学生
+     */
+    public List<Student> getAllStudentInClass(int classId) {
+        List<MyClassStudent> classStudents = readMyClassStudentFromCSV();
+        List<Integer> studentIds = classStudents.stream()
+            .filter(cs -> cs.getMyClassId() == classId)
+            .map(MyClassStudent::getStudentId)
+            .collect(Collectors.toList());
+        
+        List<Student> allStudents = studentDao.readStudentFromCSV();
+        return allStudents.stream()
+            .filter(student -> studentIds.contains(student.getStudentId()))
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * 从CSV文件中读取班级学生关系数据
      */
     public List<MyClassStudent> readMyClassStudentFromCSV() {
         List<MyClassStudent> myClassStudents = new ArrayList<>();
@@ -29,8 +51,7 @@ public class MyClassStudentCSVDao {
     }
 
     /**
-     * 将班级信息写入CSV文件
-     * @param myClassStudents 班级列表
+     * 将班级学生关系写入CSV文件
      */
     public void writeMyClassStudentToCSV(List<MyClassStudent> myClassStudents) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath))) {

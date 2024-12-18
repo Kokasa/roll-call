@@ -22,6 +22,21 @@ public interface MyClassService {
      */
     public List<Student> getAllStudentInClass(Integer classId);
 
+    /**
+     * 向班级添加学生
+     * @param classId 班级ID
+     * @param studentId 学生ID
+     * @return 操作结果提示信息
+     */
+    String addStudentToClass(Integer classId, Integer studentId);
+
+    /**
+     * 从班级中删除学生
+     * @param classId 班级ID
+     * @param studentId 学生ID
+     * @return 操作结果提示信息
+     */
+    String removeStudentFromClass(Integer classId, Integer studentId);
 
     /**
      * 更新班级对象

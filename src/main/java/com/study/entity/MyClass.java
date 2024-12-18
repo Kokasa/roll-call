@@ -14,4 +14,9 @@ public class MyClass {
         this.myClassId = myClassId;
         this.myClassName = myClassName;
     }
+
+    @Override
+    public String toString() {
+        return myClassName;
+    }
 }
