@@ -1,42 +1,36 @@
 package com.study.controller;
 
 import com.study.entity.MyClass;
+import com.study.entity.Student;
 import com.study.service.MyClassService;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.util.List;
 import java.util.Scanner;
 
 public class MyClassController {
+    private static final Logger logger = LoggerFactory.getLogger(MyClassController.class);
     private final MyClassService myClassService;
-    private final Scanner scanner;
-    public MyClassController(MyClassService myClassService, Scanner scanner) {
+    private final Scanner scanner = new Scanner(System.in);
+
+    public MyClassController(MyClassService myClassService) {
         this.myClassService = myClassService;
-        this.scanner = scanner;
     }
 
     /**
      * 新增班级
      */
-    public void addClass() {
-        MyClass myClass = new MyClass();
-
-        System.out.println("请输入班级编号: ");
-        myClass.setMyClassId(scanner.nextInt());
-        System.out.println("请输入班级名称: ");
-        myClass.setMyClassName(scanner.next());
-
-        System.out.println(myClassService.addClass(myClass));
-
-        getAllClass();
+    public String addClass(MyClass myClass) {
+        logger.info("Controller: Adding class: {}", myClass);
+        return myClassService.addClass(myClass);
     }
 
     /**
      * 删除班级
      */
-    public void deleteClass() {
-        System.out.println("请输入班级编号: ");
-        System.out.println(myClassService.deleteClass(scanner.nextInt()));
-
-        getAllClass();
+    public String deleteClass(int classId) {
+        logger.info("Controller: Deleting class: {}", classId);
+        return myClassService.deleteClass(classId);
     }
 
     /**
@@ -58,9 +52,8 @@ public class MyClassController {
     /**
      * 展示班级内学生列表
      */
-    public void getAllStudentInClass() {
-        System.out.println("请输入班级编号: ");
-        System.out.println(myClassService.getAllStudentInClass(scanner.nextInt()));
+    public List<Student> getAllStudentInClass(Integer classId) {
+        return myClassService.getAllStudentInClass(classId);
     }
 
     /**
@@ -81,9 +74,26 @@ public class MyClassController {
     /**
      * 查询所有班级
      */
-    public void getAllClass() {
-        for (MyClass myClass : myClassService.getAllClass()) {
+    public List<MyClass> getAllClass() {
+        logger.info("Controller: Getting all classes");
+        List<MyClass> myClasses = myClassService.getAllClass();
+        for (MyClass myClass : myClasses) {
             System.out.println(myClass);
         }
+        return myClasses;
+    }
+
+    /**
+     * 向班级添加学生
+     */
+    public String addStudentToClass(Integer classId, Integer studentId) {
+        return myClassService.addStudentToClass(classId, studentId);
+    }
+
+    /**
+     * 从班级中删除学生
+     */
+    public String removeStudentFromClass(Integer classId, Integer studentId) {
+        return myClassService.removeStudentFromClass(classId, studentId);
     }
 }
