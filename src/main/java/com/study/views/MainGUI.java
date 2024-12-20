@@ -1,5 +1,8 @@
-package com.study.controller;
+package com.study.views;
 
+import com.study.controller.GroupController;
+import com.study.controller.MyClassController;
+import com.study.controller.RandomSelectionController;
 import com.study.entity.Group;
 import com.study.entity.GroupStudent;
 import com.study.entity.MyClass;
@@ -253,7 +256,7 @@ public class MainGUI extends JFrame {
                 JOptionPane.showMessageDialog(this, "请先选择一个班级");
                 return;
             }
-            
+
             int selectedRow = classStudentTable.getSelectedRow();
             if (selectedRow == -1) {
                 JOptionPane.showMessageDialog(this, "请先选择要删除的学生");
@@ -262,14 +265,14 @@ public class MainGUI extends JFrame {
 
             int studentId = (Integer) classStudentModel.getValueAt(selectedRow, 0);
             String studentName = (String) classStudentModel.getValueAt(selectedRow, 1);
-            
+
             int confirm = JOptionPane.showConfirmDialog(
                 this,
                 "确定要将学生 " + studentName + " (学号: " + studentId + ") 从班级中删除吗？",
                 "确认删除",
                 JOptionPane.YES_NO_OPTION
             );
-            
+
             if (confirm == JOptionPane.YES_OPTION) {
                 String result = myClassController.removeStudentFromClass(
                     selectedClass.getMyClassId(),
@@ -437,7 +440,7 @@ public class MainGUI extends JFrame {
 
             // 使用RandomSelectionController随机抽取学生
             Student selectedStudent = randomSelectionController.getRandomStudentFromClass(classId);
-            
+
             if (selectedStudent == null) {
                 JOptionPane.showMessageDialog(this, "该班级没有学生！", "提示", JOptionPane.WARNING_MESSAGE);
                 return;
@@ -445,7 +448,7 @@ public class MainGUI extends JFrame {
 
             // 禁用按钮，防止动画过程中重复点击
             randomButton.setEnabled(false);
-            
+
             // 开始动画
             startRollingAnimation(selectedStudent);
         } catch (Exception e) {
@@ -473,28 +476,28 @@ public class MainGUI extends JFrame {
 
         flashTimer = new Timer(delay, e -> {
             counter[0]++;
-            
+
             // 从实际学生列表中随机选择
             Student randomStudent = allStudents.get((int) (Math.random() * allStudents.size()));
             selectedStudentLabel.setText("学号: " + randomStudent.getStudentId());
-            
+
             // 调整动画速度（越到后面越慢）
             if (counter[0] > totalFrames * 0.7) {
                 Timer timer = (Timer) e.getSource();
                 timer.setDelay((int) (delay * 1.5));
             }
-            
+
             // 动画结束
             if (counter[0] >= totalFrames) {
                 Timer timer = (Timer) e.getSource();
                 timer.stop();
-                
+
                 // 显示最终结果，带有放大效果
                 new Timer(50, evt -> {
                     selectedStudentLabel.setFont(new Font("微软雅黑", Font.BOLD, 60));
                     selectedStudentLabel.setText("学号: " + finalStudent.getStudentId());
                     ((Timer) evt.getSource()).stop();
-                    
+
                     // 0.5秒后恢复正常大小
                     new Timer(500, evt2 -> {
                         selectedStudentLabel.setFont(new Font("微软雅黑", Font.BOLD, 48));
@@ -516,7 +519,7 @@ public class MainGUI extends JFrame {
             JOptionPane.showMessageDialog(this, "没有可用的小组！", "提示", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         // 开始动画
         startGroupRollingAnimation(randomGroup);
     }
@@ -538,22 +541,22 @@ public class MainGUI extends JFrame {
 
         flashTimer = new Timer(delay, e -> {
             counter[0]++;
-            
+
             // 从实际小组列表中随机选择
             Group randomGroup = allGroups.get((int) (Math.random() * allGroups.size()));
             selectedStudentLabel.setText("小组: " + randomGroup.getGroupId());
-            
+
             // 动画结束
             if (counter[0] >= totalFrames) {
                 Timer timer = (Timer) e.getSource();
                 timer.stop();
-                
+
                 // 显示最终结果，带有放大效果
                 new Timer(50, evt -> {
                     selectedStudentLabel.setFont(new Font("微软雅黑", Font.BOLD, 60));
                     selectedStudentLabel.setText("小组: " + finalGroup.getGroupId());
                     ((Timer) evt.getSource()).stop();
-                    
+
                     // 0.5秒后恢复正常大小
                     new Timer(500, evt2 -> {
                         selectedStudentLabel.setFont(new Font("微软雅黑", Font.BOLD, 48));
@@ -576,7 +579,7 @@ public class MainGUI extends JFrame {
 
         // 获取班级ID
         int classId = Integer.parseInt(selectedClass.split("-")[0]);
-        
+
         // 获取随机小组
         Group randomGroup = randomSelectionController.getRandomGroup();
         if (randomGroup == null) {
@@ -613,23 +616,23 @@ public class MainGUI extends JFrame {
 
         flashTimer = new Timer(delay, e -> {
             counter[0]++;
-            
+
             // 从实际列表中随机选择
             Group randomGroup = allGroups.get((int) (Math.random() * allGroups.size()));
             Student randomStudent = groupStudents.get((int) (Math.random() * groupStudents.size()));
             selectedStudentLabel.setText("小组 " + randomGroup.getGroupId() + " 学号: " + randomStudent.getStudentId());
-            
+
             // 动画结束
             if (counter[0] >= totalFrames) {
                 Timer timer = (Timer) e.getSource();
                 timer.stop();
-                
+
                 // 显示最终结果，带有放大效果
                 new Timer(50, evt -> {
                     selectedStudentLabel.setFont(new Font("微软雅黑", Font.BOLD, 60));
                     selectedStudentLabel.setText("小组 " + finalGroup.getGroupId() + " 学号: " + finalStudent.getStudentId());
                     ((Timer) evt.getSource()).stop();
-                    
+
                     // 0.5秒后恢复正常大小
                     new Timer(500, evt2 -> {
                         selectedStudentLabel.setFont(new Font("微软雅黑", Font.BOLD, 48));

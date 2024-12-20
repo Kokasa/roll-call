@@ -7,12 +7,11 @@ import com.study.service.impl.GroupServiceImpl;
 import com.study.service.impl.MyClassServiceImpl;
 import com.study.service.impl.RandomSelectionServiceImpl;
 import com.study.service.impl.StudentServiceImpl;
-import com.study.controller.MainGUI;
+import com.study.views.MainGUI;
 
 import javax.swing.*;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class Main {
@@ -20,14 +19,14 @@ public class Main {
         // 设置文件编码
         System.setProperty("file.encoding", "UTF-8");
         System.setProperty("sun.jnu.encoding", "UTF-8");
-        
+
         // 设置控制台输出编码
         try {
             System.setOut(new PrintStream(System.out, true, "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        
+
         // 确保Swing组件使用UTF-8
         System.setProperty("sun.nio.cs.map", "x-windows-950/UTF-8");
 

@@ -76,6 +76,7 @@
                             <outfile>target/点名系统.exe</outfile>
                             <jar>target/${project.artifactId}-${project.version}-jar-with-dependencies.jar</jar>
                             <errTitle>点名系统</errTitle>
+                            <icon>src/main/resources/nesugosu_woman.ico</icon>
                             <classPath>
                                 <mainClass>com.study.Main</mainClass>
                             </classPath>
